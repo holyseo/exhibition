@@ -4,7 +4,7 @@ const Nav = () => {
   return (
     <>
       <div className="bg-[#2f3640] p-16 text-white text-2xl font-mono text- font-extrabold flex flex-row justify-between items-center ">
-        <div>Logo</div>
+        <div></div>
         <div className="flex flex-row justify-between w-1/2 ">
           <div>
             <Link to="/">Home</Link>
