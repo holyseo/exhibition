@@ -12,6 +12,7 @@ export const ObjectDetails = () => {
   const [objDataChicago, setObjDataChicago] = useState("");
   const { museum } = useContext(MuseumContext);
   const { exhibition, setExhibition } = useContext(ExhibitionContext);
+  const [status, setStatus] = useState("");
   const fetchObj = async () => {
     const response = await fetchSingleObject(id);
     try {
@@ -39,12 +40,25 @@ export const ObjectDetails = () => {
   };
 
   const handleAddToCollection = (item) => {
+    setStatus("");
+    checkStatus(item);
     setExhibition((prev) => {
       const exists = prev.some(
         (exhibitionItem) => exhibitionItem.id === item.id
       );
+
       return !exists ? [...prev, item] : prev;
     });
+  };
+
+  const checkStatus = (item) => {
+    const existingItem = exhibition.find((e) => e.id === item.id);
+
+    if (existingItem) {
+      setStatus("Already in the collection");
+    } else {
+      setStatus("Added!");
+    }
   };
 
   useEffect(() => {
@@ -87,7 +101,10 @@ export const ObjectDetails = () => {
                 {/* <div>Physical medium: {objData.physicalMedium}</div> */}
                 <div>Description: {objData.description}</div>
                 <div className="mt-10 font-semibold text-[#224b72] cursor-pointer">
-                  <a href={objData.moreInfoLink} target="_blank">
+                  <a
+                    href={`http://www.rijksmuseum.nl/en/collection/${objData.objectNumber}`}
+                    target="_blank"
+                  >
                     See more details...
                   </a>
                 </div>
@@ -97,6 +114,7 @@ export const ObjectDetails = () => {
                 >
                   ADD TO COLLECTION
                 </button>
+                <div>{status}</div>
               </div>
             </div>
           </div>
