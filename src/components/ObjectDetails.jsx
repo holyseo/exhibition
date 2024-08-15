@@ -55,9 +55,9 @@ export const ObjectDetails = () => {
     const existingItem = exhibition.find((e) => e.id === item.id);
 
     if (existingItem) {
-      setStatus("Already in the collection");
+      setStatus("Aready in the collection.");
     } else {
-      setStatus("Added!");
+      setStatus("Successfully added!");
     }
   };
 
@@ -114,7 +114,7 @@ export const ObjectDetails = () => {
                 >
                   ADD TO COLLECTION
                 </button>
-                <div>{status}</div>
+                <span className="text-right text-white">{status}</span>
               </div>
             </div>
           </div>
@@ -182,6 +182,7 @@ export const ObjectDetails = () => {
                 >
                   ADD TO COLLECTION
                 </button>
+                <span className="text-right text-white">{status}</span>
               </div>
             </div>
           </div>
