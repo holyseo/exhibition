@@ -56,8 +56,14 @@ export const ObjectDetails = () => {
 
     if (existingItem) {
       setStatus("Aready in the collection.");
+      setTimeout(() => {
+        setStatus("");
+      }, 3000);
     } else {
       setStatus("Successfully added!");
+      setTimeout(() => {
+        setStatus("");
+      }, 3000);
     }
   };
 
@@ -114,7 +120,7 @@ export const ObjectDetails = () => {
                 >
                   ADD TO COLLECTION
                 </button>
-                <span className="text-right text-white">{status}</span>
+                <span className="text-right text-red-800">{status}</span>
               </div>
             </div>
           </div>
@@ -182,7 +188,7 @@ export const ObjectDetails = () => {
                 >
                   ADD TO COLLECTION
                 </button>
-                <span className="text-right text-white">{status}</span>
+                <span className="text-right text-red-800">{status}</span>
               </div>
             </div>
           </div>
