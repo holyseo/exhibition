@@ -120,7 +120,9 @@ export const ObjectDetails = () => {
                 >
                   ADD TO COLLECTION
                 </button>
-                <span className="text-right text-red-800">{status}</span>
+                <span className="text-xs text-right text-red-800">
+                  {status}
+                </span>
               </div>
             </div>
           </div>
@@ -188,7 +190,9 @@ export const ObjectDetails = () => {
                 >
                   ADD TO COLLECTION
                 </button>
-                <span className="text-right text-red-800">{status}</span>
+                <span className="text-xs text-right text-red-800">
+                  {status}
+                </span>
               </div>
             </div>
           </div>
