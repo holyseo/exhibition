@@ -60,7 +60,7 @@ export const ObjectDetails = () => {
         setStatus("");
       }, 3000);
     } else {
-      setStatus("Successfully added!");
+      setStatus("Successfully added to your collection!");
       setTimeout(() => {
         setStatus("");
       }, 3000);

@@ -68,7 +68,7 @@ const Collection = () => {
               <div className="w-full">
                 <div className="flex flex-col justify-start m-10 bg-[#9c8876]">
                   <div className="flex min-h-[425px]">
-                    <div className="">
+                    <div className="max-w-[290px]">
                       {item.webImage.url !== undefined ? (
                         <img
                           src={item.webImage.url}
@@ -99,7 +99,10 @@ const Collection = () => {
                         )}
                       </div>
                       <div className="mt-2 font-semibold text-[#224b72] cursor-pointer">
-                        <a href={item.moreInfoLink} target="_blank">
+                        <a
+                          href={`http://www.rijksmuseum.nl/en/collection/${item.objectNumber}`}
+                          target="_blank"
+                        >
                           See more details...
                         </a>
                       </div>
