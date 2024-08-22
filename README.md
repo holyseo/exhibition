@@ -40,3 +40,7 @@ npm run dev
 - Temporary Collection: Artworks can be saved to a temporary collection for further exploration.
 - Artwork Details: Detailed information about each artwork is displayed when selected.
 - Create an Exhibition: Users can curate their own exhibitions, which persist during their session.
+
+## Live link to the project
+
+[Click here](https://exhibition-nc.netlify.app/)
