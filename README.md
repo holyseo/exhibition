@@ -9,8 +9,8 @@ The Exhibition Curator Project is a platform that allows users to curate persona
 1. Clone the repository.
 2. Install dependencies:
 
-   ```npm install
-
+   ```
+   npm install
    ```
 
 3. Set up the Supabase backend:
@@ -19,21 +19,21 @@ The Exhibition Curator Project is a platform that allows users to curate persona
    - Create a new project and set up your database tables.
    - Obtain your Supabase API keys and add them to your .env file:
 
-     ```NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-
+     ```
+     NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
      ```
 
-     ```NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-
+     ```
+     NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
      ```
 
-4. Run the development server:
-
-```npm run dev
+## Run the development server:
 
 ```
+npm run dev
+```
 
-5. Usage
+## Usage
 
 - Login/Register: Users must create an account or log in to use the platform. Authentication is handled via Supabase.
 - Search and Filter Artworks: Users can search for and filter artworks based on provided criteria.

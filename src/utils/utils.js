@@ -38,7 +38,5 @@ export const sanitiseObjects = (objects, museum) => {
     }
   });
 
-  // console.log(result);
-
   return result;
 };

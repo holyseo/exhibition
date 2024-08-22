@@ -58,14 +58,12 @@ const Search = () => {
         const newArtwork = sanitiseObjects(result.artObjects, museum);
         setObjects(newArtwork);
         setLoadingObjects(false);
-        console.log(result.artObjects);
       } catch (error) {
         console.log(error);
       }
     } else {
       setLoadingObjects(true);
       const result = await searchByMakerFromChicago(maker);
-      console.log(result);
       try {
         const newArtwork = sanitiseObjects(result, museum);
         setObjects(newArtwork);

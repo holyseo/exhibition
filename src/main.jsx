@@ -9,25 +9,32 @@ import Nav from "./pages/Nav.jsx";
 import Collection from "./pages/Collection.jsx";
 import { ObjectDetails } from "./components/ObjectDetails.jsx";
 import {
+  AuthProvider,
   ExhibitionContextProvider,
   MuseumContextProvider,
 } from "./context/ContextProvider.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ExhibitionContextProvider>
-      <MuseumContextProvider>
-        <BrowserRouter>
-          <Nav />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/exhibition" element={<Exhibition />} />
-            <Route path="/collection" element={<Collection />} />
-            <Route path="/object/:id" element={<ObjectDetails />} />
-          </Routes>
-        </BrowserRouter>
-      </MuseumContextProvider>
-    </ExhibitionContextProvider>
+    <AuthProvider>
+      <ExhibitionContextProvider>
+        <MuseumContextProvider>
+          <BrowserRouter>
+            <Nav />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/exhibition" element={<Exhibition />} />
+              <Route path="/collection" element={<Collection />} />
+              <Route path="/object/:id" element={<ObjectDetails />} />
+            </Routes>
+          </BrowserRouter>
+        </MuseumContextProvider>
+      </ExhibitionContextProvider>
+    </AuthProvider>
   </React.StrictMode>
 );

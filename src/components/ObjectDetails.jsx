@@ -3,7 +3,6 @@ import { fetchSingleObject, fetchSingleObjectChicago } from "../api";
 import { useContext, useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
 import { ExhibitionContext, MuseumContext } from "../context/ContextProvider";
-import { sanitiseObjects } from "../utils/utils";
 
 export const ObjectDetails = () => {
   const { id } = useParams();
@@ -18,9 +17,6 @@ export const ObjectDetails = () => {
     try {
       if (response && response.artObject) {
         setObjData(response.artObject);
-        // const artwork = sanitiseObjects(response.artObject, museum);
-        // setObjData(artwork);
-        console.log(response.artObject);
         setLoading(false);
       }
     } catch (error) {
@@ -69,7 +65,6 @@ export const ObjectDetails = () => {
 
   useEffect(() => {
     museum === "rijks" ? fetchObj() : fetchObjChicago();
-    console.log(exhibition);
   }, [id]);
 
   return (

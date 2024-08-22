@@ -16,7 +16,6 @@ const Home = () => {
     if (response) {
       const newArtworks = sanitiseObjects(response.artObjects, museum);
       setArtworks(newArtworks);
-      console.log(artworks);
     } else {
       console.error("No data found in response:", response);
     }
@@ -29,7 +28,6 @@ const Home = () => {
     if (response) {
       const newArtworks = sanitiseObjects(response.data, museum);
       setArtworks(newArtworks);
-      console.log(artworks);
     } else {
       console.log("No data from Chicago Museum");
     }

@@ -1,10 +1,27 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ExhibitionContext } from "../context/ContextProvider";
+import { supabase } from "../utils/supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 const Collection = () => {
   const { exhibition, setExhibition } = useContext(ExhibitionContext);
-  console.log(exhibition);
   const [timeOut, setTimeOut] = useState(true);
+  const [existing, setExisting] = useState(false);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session?.user) {
+        setUser(session.user);
+      }
+    };
+    fetchUser();
+  }, []);
+
   const handleRemoveFromCollection = (item) => {
     setExhibition((prev) => {
       const newExhibition = prev.filter(
@@ -15,34 +32,87 @@ const Collection = () => {
     });
   };
 
-  const handleAddToExhibition = (item) => {
+  const handleAddToExhibition = async (item) => {
+    if (user === null) {
+      alert("Please login first to save an art object to Exhibition");
+      navigate("/login");
+      return;
+    }
+
     setTimeOut(false);
     setTimeout(() => {
       setTimeOut(true);
     }, 3000);
-    const storedCurations = JSON.parse(localStorage.getItem("curations")) || [];
-    const exists = storedCurations.some(
-      (curationItem) => curationItem.id === item.id
-    );
-    if (!exists) {
-      const newCurations = [...storedCurations, item];
-      localStorage.setItem("curations", JSON.stringify(newCurations));
-      setExhibition((prevExhibition) => [...prevExhibition, item]);
-      console.log("Item added successfully");
-    } else {
-      console.log("Item already exists in curations");
+
+    const sourceType = typeof item.id === "string" ? "rijksmuseum" : "chicago";
+
+    const itemDescription =
+      typeof item.id === "string" ? item.description : item.medium_display;
+
+    const principalMaker =
+      typeof item.id === "string"
+        ? item.principalOrFirstMaker
+        : item.artist_display;
+
+    const webImage =
+      typeof item.id === "string"
+        ? item.webImage.url
+        : `https://www.artic.edu/iiif/2/${
+            !item.image_id ? item.alt_image_ids[0] : item.image_id
+          }/full/843,/0/default.jpg`;
+
+    const moreInfoLink =
+      typeof item.id === "string"
+        ? `http://www.rijksmuseum.nl/en/collection/${item.objectNumber}`
+        : `https://www.artic.edu/artworks/${item.id}`;
+
+    const { data: existingItems, error: checkError } = await supabase
+      .from("curations")
+      .select("moreinfolink")
+      .eq("moreinfolink", moreInfoLink);
+
+    if (checkError) {
+      console.log("Error checking for existing item:", checkError);
+      return;
     }
-    handleRemoveFromCollection(item);
+
+    if (existingItems && existingItems.length > 0) {
+      setExisting(true);
+      return;
+    }
+
+    const { data, error } = await supabase.from("curations").insert({
+      user_id: user.id,
+      title: item.title,
+      principalorfirstmaker: principalMaker,
+      description: itemDescription,
+      webimage: webImage,
+      moreinfolink: moreInfoLink,
+      source_type: sourceType,
+    });
+
+    if (error) {
+      console.error("Error adding item to exhibition:", error);
+    } else {
+      handleRemoveFromCollection(item);
+      // setExisting(false);
+    }
   };
 
   return exhibition.length < 1 ? (
     <div>
-      <div className="flex items-center justify-center bg-green-400">
+      <div
+        className={`flex items-center justify-center ${
+          existing ? "bg-red-400" : "bg-green-400"
+        }`}
+      >
         {timeOut ? (
           ""
         ) : (
           <span className="p-5">
-            The object has been successfully added to your exhibition!
+            {existing
+              ? "The object is already saved in your exhibition"
+              : "The object has been successfully added to your exhibition!"}
           </span>
         )}
       </div>
@@ -52,12 +122,18 @@ const Collection = () => {
     </div>
   ) : (
     <div>
-      <div className="flex items-center justify-center bg-green-400">
+      <div
+        className={`flex items-center justify-center ${
+          existing ? "bg-red-400" : "bg-green-400"
+        }`}
+      >
         {timeOut ? (
           ""
         ) : (
           <span className="p-5">
-            The object has been successfully added to your exhibition!
+            {existing
+              ? "The object is already saved in your exhibition"
+              : "The object has been successfully added to your exhibition!"}
           </span>
         )}
       </div>
@@ -73,7 +149,6 @@ const Collection = () => {
                         <img
                           src={item.webImage.url}
                           alt={item.title}
-                          // className="object-cover w-full h-full "
                           loading="lazy"
                         />
                       ) : (
@@ -83,9 +158,7 @@ const Collection = () => {
                     <div className="flex flex-col gap-2 p-5 font-mono">
                       <div>Title: {item.title}</div>
                       <hr />
-                      {/* <div>Label: {item.longTitle}</div> */}
                       <div>Principal Maker: {item.principalOrFirstmaker}</div>
-                      {/* <div>Physical medium: {item.physicalMedium}</div> */}
                       <div>
                         Description:
                         {!item.description ? (
@@ -144,20 +217,7 @@ const Collection = () => {
                     <div className="flex flex-col gap-2 p-5 font-mono">
                       <div>Title: {item.title}</div>
                       <hr />
-                      {/* <div>
-                      Label:
-                      {!item.short_description ? (
-                        " Not available"
-                      ) : (
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: item.short_description,
-                          }}
-                        ></span>
-                      )}
-                    </div> */}
                       <div>Principal Maker: {item.artist_display}</div>
-                      {/* <div>Physical medium: {item.medium_display}</div> */}
                       <div>
                         Description:
                         {!item.description ? (
