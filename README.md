@@ -1,9 +1,42 @@
-# React + Vite
+# Exhibition Curator Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+The Exhibition Curator Project is a platform that allows users to curate personalized art exhibitions. Users can search for artworks using key terms or preset options, select their preferred pieces, and add them to a custom exhibition. Each exhibition includes images and detailed information about the selected artworks, with navigation options and links to further resources.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# exhibition
+## Installation
+
+1. Clone the repository.
+2. Install dependencies:
+
+   ```npm install
+
+   ```
+
+3. Set up the Supabase backend:
+
+   - Sign up for a Supabase account.
+   - Create a new project and set up your database tables.
+   - Obtain your Supabase API keys and add them to your .env file:
+
+     ```NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+
+     ```
+
+     ```NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+
+     ```
+
+4. Run the development server:
+
+```npm run dev
+
+```
+
+5. Usage
+
+- Login/Register: Users must create an account or log in to use the platform. Authentication is handled via Supabase.
+- Search and Filter Artworks: Users can search for and filter artworks based on provided criteria.
+- Temporary Collection: Artworks can be saved to a temporary collection for further exploration.
+- Artwork Details: Detailed information about each artwork is displayed when selected.
+- Create an Exhibition: Users can curate their own exhibitions, which persist during their session.
