@@ -20,11 +20,11 @@ The Exhibition Curator Project is a platform that allows users to curate persona
    - Obtain your Supabase API keys and add them to your .env file:
 
      ```
-     NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+     VITE_SUPABASE_URL=your-supabase-url
      ```
 
      ```
-     NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+     VITE_SUPABASE_ANON_KEY=your-anon-key
      ```
 
 ## Run the development server:
